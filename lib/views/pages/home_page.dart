@@ -4,6 +4,45 @@ import 'package:flutter_ecommerce/utilities/assets.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  Widget _buildHeaderOfList(
+    BuildContext context, {
+    required String title,
+    VoidCallback? onTab,
+    required String description,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: Theme.of(context).textTheme.headline4!.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            InkWell(
+              onTap: onTab,
+              child: Text(
+                'View all',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ),
+          ],
+        ),
+        Text(
+          description,
+          style: Theme.of(context)
+              .textTheme
+              .subtitle1!
+              .copyWith(color: Colors.grey),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -40,9 +79,19 @@ class HomePage extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 24.0),
-        Row(
-
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            children: [
+              _buildHeaderOfList(
+                context,
+                title: 'Sale',
+                description: 'Super Summer Sale',
+              ),
+            ],
+          ),
         ),
+        const SizedBox(height: 8.0),
       ],
     );
   }
