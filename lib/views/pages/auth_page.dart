@@ -84,7 +84,7 @@ class _AuthPageState extends State<AuthPage> {
                       if (_formKey.currentState!.validate()) {
                         //This .validate to run validator attribute in all the widget under the form widget
                         Navigator.of(context)
-                            .pushNamed(AppRoutes.HomePageRoute);
+                            .pushNamed(AppRoutes.bottomNavbarPageRoute);
                       }
                     },
                   ),
