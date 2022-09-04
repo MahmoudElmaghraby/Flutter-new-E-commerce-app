@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce/utilities/assets.dart';
+import 'package:flutter_ecommerce/views/widgets/list_item_home.dart';
+
+import '../../models/Product.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  /// TODO: Temp code till refactor to a separate class with a separate context
   Widget _buildHeaderOfList(
     BuildContext context, {
     required String title,
@@ -46,53 +50,89 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Stack(
-          alignment: Alignment.bottomLeft,
-          children: [
-            Image.network(
-              AppAssets.topBannerHomePageAsset,
-              width: double.infinity,
-              height: size.height * 0.3,
-              fit: BoxFit.cover,
-            ),
-            Opacity(
-              opacity: 0.3,
-              child: Container(
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Stack(
+            alignment: Alignment.bottomLeft,
+            children: [
+              Image.network(
+                AppAssets.topBannerHomePageAsset,
                 width: double.infinity,
                 height: size.height * 0.3,
-                color: Colors.black,
+                fit: BoxFit.cover,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Text(
-                'Street Clothes',
-                style: Theme.of(context).textTheme.headline4!.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+              Opacity(
+                opacity: 0.3,
+                child: Container(
+                  width: double.infinity,
+                  height: size.height * 0.3,
+                  color: Colors.black,
+                ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 24.0),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            children: [
-              _buildHeaderOfList(
-                context,
-                title: 'Sale',
-                description: 'Super Summer Sale',
+              Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Text(
+                  'Street Clothes',
+                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
               ),
             ],
           ),
-        ),
-        const SizedBox(height: 8.0),
-      ],
+          const SizedBox(height: 24.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              children: [
+                _buildHeaderOfList(
+                  context,
+                  title: 'Sale',
+                  description: 'Super Summer Sale',
+                ),
+                const SizedBox(height: 8.0),
+                SizedBox(
+                  height: 300,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: dummyProducts
+                        .map(
+                          (e) => Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: ListItemHome(product: e),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+                _buildHeaderOfList(
+                  context,
+                  title: 'New',
+                  description: 'Super New Products',
+                ),
+                const SizedBox(height: 8.0),
+                SizedBox(
+                  height: 300,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: dummyProducts
+                        .map(
+                          (e) => Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: ListItemHome(product: e),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
