@@ -8,6 +8,8 @@ abstract class AuthBase {
   Future<User?> loginWithEmailAndPassword(String email, String password);
 
   Future<User?> signupWithEmailAndPassword(String email, String password);
+
+  Future<void> logout();
 }
 
 class Auth implements AuthBase {
@@ -34,4 +36,7 @@ class Auth implements AuthBase {
   //To get a stream of all changes happens
   @override
   Stream<User?> authSteamChanges() => _firebaseAuth.authStateChanges();
+
+  @override
+  Future<void> logout() async => await _firebaseAuth.signOut();
 }
